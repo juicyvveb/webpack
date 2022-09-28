@@ -1,0 +1,18 @@
+@import './fonts.scss';
+
+p {
+    color: rgb(31, 149, 31);
+}
+
+.cat{
+    background-image: url('../images/kit.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 150px;
+    height: 150px;
+}
+
+h1 {
+    font-family: Bungee;
+    font-size: 18px;
+}

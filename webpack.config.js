@@ -14,17 +14,20 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname, './dist'),
-        filename: '[name].bundle.js',
+        filename: '[name].[contenthash].js',
+        assetModuleFilename: "assets/[hash][ext][query]",
         clean: true
       },
     plugins: [
         new HtmlWebpackPlugin({
             title: 'Webpack config',
-            template: './src/index.html',
-            filename: './[name].[hash].html',
+            template: './index.pug',
+            filename: '[name].html',
             favicon: './assets/favicon/success.jpg',
         }),
-        new MinCssExtract(),
+        new MinCssExtract({
+            filename: '[name].[contenthash].css'
+        }),
     ],
     module: {
         rules: [
@@ -48,9 +51,41 @@ module.exports = {
                             }
                         }
                     },
-                    // "sass-loader",
+                    "sass-loader",
                 ]
+            },
+            {
+                test: /\.(jpg|svg|png|jpeg|gif)$/i,
+                type: 'asset/resource',
+            }, 
+            {
+                test: /\.html$/i,
+                loader: "html-loader"
+            },
+            {
+                test: /\.(ttf|woff|woff2|eot|otf)$/i,
+                type: 'asset/resource'
+            },
+            {
+                test: /\.pug$/,
+                loader: "pug-loader",
+                exclude: /(node_modules|bower_components)/,
+            },
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: "babel-loader",
+                    options: {
+                        presets: ['@babel/preset-env']
+                    }
+                }
             }
         ]
+    },
+    devServer: {
+        static: './dist',
+        port: '3000',
+        hot: true
     }
   };

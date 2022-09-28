@@ -1,7 +1,7 @@
-import './style.css';
+import './styles/main.scss';
+import './index.pug';
 
-
-console.log('index js')
+console.log('id djs')
 
 
 //ctrl+alt+l посмотреть структурированно код
